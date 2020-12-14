@@ -1,7 +1,5 @@
 package com.rebecca.productsandcategories.controllers;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.rebecca.productsandcategories.models.Category;
 import com.rebecca.productsandcategories.models.Product;
@@ -59,27 +58,32 @@ public class MainController {
 	@GetMapping("/products/{id}")
 	public String showProduct(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("product", prodServ.findProduct(id)); 
+		model.addAttribute("categories", catServ.allCategories()); 
 		return "/products/show.jsp"; 
 	}
 	
 	@GetMapping("/categories/{id}")
-	public String showCategories(@PathVariable("id") Long id, Model model, @ModelAttribute("product") Product product) {
+	public String showCategories(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("category", catServ.findCategory(id)); 
+		model.addAttribute("products", prodServ.allProducts()); 
 		return "/categories/show.jsp"; 
 	}
 	
 	@PostMapping("/categories/{id}")
-	public String addProduct(@Valid @ModelAttribute("product") Product product, BindingResult result, @PathVariable("id") Long id) {
-		if(result.hasErrors()) {
-			return "/categories.show.jsp"; 
-		} else {
-			Category cat = catServ.findCategory(id); 
-			List<Product> products = cat.getProducts(); 
-			products.add(product); 
-			cat.setProducts(products);
-			catServ.updateCategory(cat); 
-		}
-		return "redirect:/categories/show"; 
+	public String addProduct(@RequestParam("productId") Long productId, @PathVariable("id") Long id) {
+		Category cat = catServ.findCategory(id); 
+		Product prod = prodServ.findProduct(productId); 
+		cat.getProducts().add(prod); 
+		catServ.updateCategory(cat); 
+		return "redirect:/categories/" + id; 
 	}
 
+	@PostMapping("/products/{id}")
+	public String addCategory(@RequestParam("categoryId") Long categoryId, @PathVariable("id") Long id) {
+		Category cat = catServ.findCategory(categoryId); 
+		Product prod = prodServ.findProduct(id); 
+		prod.getCategories().add(cat); 
+		prodServ.updateProduct(prod); 
+		return "redirect:/products/" + id; 
+	}
 }

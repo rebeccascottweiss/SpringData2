@@ -16,5 +16,16 @@
 	<c:forEach items="${ product.categories }" var="cat">
 		<p>- ${ cat.name }</p>
 	</c:forEach>
+	<div class="wrapper">
+			<form action="/products/${ product.id }" method="post">
+				<label for="categoryId">Add Category</label>
+				<select name="categoryId">
+					<c:forEach items="${ categories }" var="cat">
+						<option value="${ cat.id }">${ cat.name }</option>
+					</c:forEach>
+				</select>
+				<input type="submit" value="Add" />
+			</form>
+		</div>
 </body>
 </html>
