@@ -38,13 +38,14 @@ public class MainController {
 			return "/dojos/new.jsp"; 
 		} else {
 			dojoServ.createDojo(dojo); 
-			return "redirect:/dojos/new"; 	
+			return "redirect:/ninjas/new"; 	
 		}
 	}
 	
 	@GetMapping("/ninjas/new")
 	public String newNinja(@ModelAttribute("ninja") Ninja ninja, Model model) {
-		model.addAttribute("dojos", dojoServ.allDojos()); 
+		List<Dojo> myDojos = dojoServ.allDojos(); 
+		model.addAttribute("dojos", myDojos); 
 		return "/ninjas/new.jsp"; 
 	}
 	
@@ -61,13 +62,15 @@ public class MainController {
 	@GetMapping("/dojos/{id}")
 	public String showDojo(@PathVariable("id") Long id, Model model) {
 		Dojo dojo = dojoServ.findDojo(id);
+		System.out.println(dojo); 
 		if(dojo != null) {
+			
 			List<Ninja> ninjas = dojo.getNinjas(); 
 			model.addAttribute("ninjas", ninjas); 		
 			}
 		model.addAttribute("dojo", dojo); 
 				
-		return "dojos/show.jps"; 
+		return "/dojos/dojoInfo.jsp"; 
 	}
 
 }

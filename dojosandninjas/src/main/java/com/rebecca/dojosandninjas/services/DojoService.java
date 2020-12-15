@@ -29,6 +29,7 @@ public class DojoService {
 		if(dojo.isPresent()) {
 			return dojo.get(); 
 		} else {
+			System.out.println("No Dojo Here");
 			return null; 
 		}
 	}

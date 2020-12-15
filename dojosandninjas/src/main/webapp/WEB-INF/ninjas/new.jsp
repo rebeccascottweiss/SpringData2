@@ -33,7 +33,7 @@
 			<form:errors path="dojo"/>
 			<form:select path="dojo">
 				<c:forEach items="${ dojos }" var="dojo"> 
-					<form:option value="${ dojo }">
+					<form:option value="${ dojo.id }">
 						<c:out value="${ dojo.name }"/>
 					</form:option>
 				</c:forEach>
