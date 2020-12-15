@@ -32,11 +32,11 @@
 		</tbody>
 	</table>
 	<h2>Add your answer:</h2>
-	<form:form action="/questions/${ question.id }" method="post" modelAttribute="answer">
+	<form:form action="/createAnswer" method="post" modelAttribute="answer">
 		<form:label path="text">Answer</form:label>
 		<form:errors path="text"/>
 		<form:input path="text"/>
-		<form:hidden path="question" value="${ question }"/>
+		<form:hidden path="question" value="${ question.id }"/>
 		<input type="submit" value="Answer it!"/>
 	</form:form> 
 </body>

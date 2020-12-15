@@ -20,9 +20,10 @@
 			<form:textarea path="text"/>
 		</p>
 		<p>
-			<form:label path="tags">Tags: </form:label>
-			<form:errors path="tags" />
-			<form:input path="tags"/>
+			<c:out value="${ errs }"/>
+			<form:label path="tagList">Tags: </form:label>
+			<form:errors path="tagList" />
+			<form:input path="tagList"/>
 		</p>
 		<input type="submit" value="Submit" />
 	</form:form>

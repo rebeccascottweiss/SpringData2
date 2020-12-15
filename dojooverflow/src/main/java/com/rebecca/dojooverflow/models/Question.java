@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="questions")
@@ -42,8 +43,19 @@ public class Question {
 		inverseJoinColumns = @JoinColumn(name="tag_id")
 	)
 	private List<Tag> tags; 
+	
+	@Transient
+	private List<String> tagList; 
 
 	
+	public List<String> getTagList() {
+		return tagList;
+	}
+
+	public void setTagList(List<String> tagList) {
+		this.tagList = tagList;
+	}
+
 	public Question() {
 		
 	}
